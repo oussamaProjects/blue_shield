@@ -111,7 +111,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     /**
-     * Projects
+     * Affaires
      */
     Route::group(['prefix' => 'projects'], function () {
         Route::get('/data', 'ProjectsController@indexData')->name('projects.index.data');
@@ -168,12 +168,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/newitem/{external_id}', 'InvoicesController@newItem')->name('invoice.new.item');
         Route::get('/overdue', 'InvoicesController@overdue')->name('invoices.overdue');
         Route::get('/{invoice}', 'InvoicesController@show')->name('invoices.show');
+        Route::post('/', 'InvoicesController@store')->name('invoices.store');
+        Route::get('/', 'InvoicesController@index')->name('invoices.index'); 
         Route::get('/payments-data/{invoice}', 'InvoicesController@paymentsDataTable')->name('invoice.paymentsDataTable');
     });
 
     Route::get('/money-format', 'InvoicesController@moneyFormat')->name('money.format');
-    Route::post('/invoice/create/offer/{lead}', 'OffersController@create')->name('create.offer');
-    Route::post('/invoice/create/invoiceLine/{invoice}', 'InvoicesController@newItems')->name('create.invoiceLine');
+    // Route::post('/invoice/create/offer/{lead}', 'OffersController@create')->name('create.offer');
+    // Route::post('/invoice/create/invoiceLine/{invoice}', 'InvoicesController@newItems')->name('create.invoiceLine');
+    
+    Route::get('/invoice/create', 'InvoicesController@create')->name('invoices.create');
 
     /**
      * Invoice Lines

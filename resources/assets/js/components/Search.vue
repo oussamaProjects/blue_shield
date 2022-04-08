@@ -11,7 +11,7 @@
                             <li><a @click="setSearchType('clients')" href="#">{{trans('Clients')}}</a></li>
                             <li><a @click="setSearchType('tasks')" href="#">{{trans('Tasks')}}</a></li>
                             <li><a @click="setSearchType('leads')" href="#">{{trans('Leads')}}</a></li>
-                            <li><a @click="setSearchType('projects')" href="#">{{trans('Projects')}}</a></li>
+                            <li><a @click="setSearchType('projects')" href="#">{{trans('Affaires')}}</a></li>
                         </ul>
                     </div>
                     <div class="frame">

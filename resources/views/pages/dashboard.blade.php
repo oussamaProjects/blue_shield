@@ -130,7 +130,7 @@
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
                     </div>
-                    <a href="{{route('projects.index')}}" class="small-box-footer">{{ __('All Projects') }} <i
+                    <a href="{{route('projects.index')}}" class="small-box-footer">{{ __('All Affaires') }} <i
                                 class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>

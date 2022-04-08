@@ -68,27 +68,50 @@
                 @endif
             </div>
             <a href="#projects" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu"><i
-                        class="fa fa-briefcase sidebar-icon "></i><span id="menu-txt">{{ __('Projects') }}</span>
+                        class="fa fa-briefcase sidebar-icon "></i><span id="menu-txt">{{ __('Affaires') }}</span>
                 <i class="icon ion-md-arrow-dropup arrow-side sidebar-arrow"></i></a>
             <div class="collapse" id="projects">
                 <a href="{{ route('projects.index')}}" class="list-group-item childlist"> <i
-                            class="bullet-point"><span></span></i> {{ __('All Projects') }}</a>
+                            class="bullet-point"><span></span></i> {{ __('All Affaires') }}</a>
                 @if(Entrust::can('project-create'))
                     <a href="{{ route('projects.create')}}" id="newProject"  class="list-group-item childlist"> <i
-                                class="bullet-point"><span></span></i> {{ __('New Project') }}</a>
+                                class="bullet-point"><span></span></i> {{ __('New Affaire') }}</a>
                 @endif
             </div>
-            <a href="#tasks" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu"><i
-                        class="fa fa-tasks sidebar-icon "></i><span id="menu-txt">{{ __('Tasks') }}</span>
-                <i class="icon ion-md-arrow-dropup arrow-side sidebar-arrow"></i></a>
-            <div class="collapse" id="tasks">
-                <a href="{{ route('tasks.index')}}" class="list-group-item childlist"> <i
-                            class="bullet-point"><span></span></i> {{ __('All Tasks') }}</a>
-                @if(Entrust::can('task-create'))
-                    <a href="{{ route('tasks.create')}}" id="newTask" class="list-group-item childlist"> <i
-                                class="bullet-point"><span></span></i> {{ __('New Task') }}</a>
-                @endif
+
+
+            <a href="#invoice" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu">
+                <i class="fa fa-briefcase sidebar-icon "></i>
+                <span id="menu-txt">{{ __('Invoices') }}</span>
+                <i class="icon ion-md-arrow-dropup arrow-side sidebar-arrow"></i>
+            </a>
+            <div class="collapse" id="invoice">
+                <a href="{{ route('invoices.index')}}" class="list-group-item childlist">
+                    <i class="bullet-point"><span></span></i>
+                    {{ __('All Invoices') }}
+                </a>
+                {{-- @if(Entrust::can('Invoice-create')) --}}
+                    <a href="{{ route('invoices.create')}}" id="newInvoice" class="list-group-item childlist"> 
+                        <i class="bullet-point"><span></span></i> 
+                        {{ __('New Invoice') }}
+                    </a>
+                {{-- @endif --}}
             </div>
+
+
+            <a href="#tasks" class="list-group-item" data-toggle="collapse" data-parent="#MainMenu">
+                <i
+                class="fa fa-tasks sidebar-icon "></i><span id="menu-txt">{{ __('Tasks') }}</span>
+        <i class="icon ion-md-arrow-dropup arrow-side sidebar-arrow"></i>
+    </a>
+    <div class="collapse" id="tasks">
+        <a href="{{ route('tasks.index')}}" class="list-group-item childlist"> <i
+                    class="bullet-point"><span></span></i> {{ __('All Tasks') }}</a>
+        @if(Entrust::can('task-create'))
+            <a href="{{ route('tasks.create')}}" id="newTask" class="list-group-item childlist"> <i
+                        class="bullet-point"><span></span></i> {{ __('New Task') }}</a>
+        @endif
+    </div>
 
             <a href="#user" class=" list-group-item" data-toggle="collapse" data-parent="#MainMenu"><i
                         class="fa fa-users sidebar-icon"></i><span id="menu-txt">{{ __('Users') }}</span>

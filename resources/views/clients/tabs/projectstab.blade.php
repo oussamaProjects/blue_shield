@@ -1,5 +1,5 @@
 <table class="table table-hover" id="projects-table">
-    <h3>{{ __('Projects assigned') }}</h3>
+    <h3>{{ __('Affaires assigned') }}</h3>
     <thead>
     <th>{{ __('Title') }}</th>
     <th>{{ __('Assigned') }}</th>

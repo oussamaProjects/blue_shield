@@ -28,6 +28,9 @@ use App\Services\Invoice\InvoiceCalculator;
 use App\Http\Requests\Invoice\AddInvoiceLine;
 use App\Models\Offer;
 use App\Models\Product;
+use App\Models\Project;
+use App\Models\Status;
+use App\Models\User;
 use App\Services\InvoiceNumber\InvoiceNumberService;
 use Illuminate\Support\Facades\Validator;
 
@@ -43,7 +46,29 @@ class InvoicesController extends Controller
      */
     public function index()
     {
-        return view('invoices.index');
+        $invoices = Invoice::pastDueAt()->get();
+        return view('invoices.index')->withInvoices($invoices);
+    }
+
+    public function create($client_external_id = null, $project_external_id = null)
+    {
+        $projects = null;
+        $client =  Client::whereExternalId($client_external_id);
+        $project = Project::whereExternalId($project_external_id)->first();
+        if ($client) {
+            $projects = $client->projects()->whereHas('status', function ($q) {
+                return $q->where('title', '!=', 'Closed');
+            })->pluck('title', 'external_id');
+        }
+
+        return view('invoices.create')
+            ->withUsers(User::with(['department'])->get()->pluck('nameAndDepartmentEagerLoading', 'id'))
+            ->withClients(Client::pluck('company_name', 'external_id'))
+            ->withClient($client ?: null)
+            ->withProjects($projects ?: null)
+            ->withProject($project ?: null)
+            ->withStatuses(Status::typeOfTask()->pluck('title', 'id'))
+            ->with('filesystem_integration', Integration::whereApiType('file')->first());
     }
 
     /**
@@ -58,7 +83,7 @@ class InvoicesController extends Controller
             session()->flash('flash_message_warning', __('You do not have permission to view this invoice'));
             return redirect()->route('clients.index');
         }
-        
+
         $apiConnected = false;
         $invoiceContacts = [];
         $primaryContact = null;
@@ -81,7 +106,7 @@ class InvoicesController extends Controller
         $subPrice = $invoiceCalculator->getSubTotal();
         $vatPrice = $invoiceCalculator->getVatTotal();
         $amountDue = $invoiceCalculator->getAmountDue();
-        
+
         return view('invoices.show')
             ->withInvoice($invoice)
             ->withApiconnected($apiConnected)
@@ -153,34 +178,34 @@ class InvoicesController extends Controller
         }
 
         $product = null;
-        if($request->product_id) {
+        if ($request->product_id) {
             $product = $request->product_id;
-        } elseif($request->product) {
+        } elseif ($request->product) {
             $product = Product::whereExternalId($request->product)->first()->id;
         }
 
         InvoiceLine::create([
-                'external_id' => Uuid::uuid4()->toString(),
-                'title' => $request->title,
-                'comment' => $request->comment,
-                'quantity' => $request->quantity,
-                'type' => $request->type,
-                'price' => $request->price * 100,
-                'invoice_id' => $invoice->id,
-                'product_id' => $product
-            ]);
+            'external_id' => Uuid::uuid4()->toString(),
+            'title' => $request->title,
+            'comment' => $request->comment,
+            'quantity' => $request->quantity,
+            'type' => $request->type,
+            'price' => $request->price * 100,
+            'invoice_id' => $invoice->id,
+            'product_id' => $product
+        ]);
 
         return redirect()->back();
     }
-    
+
     public function newItems($external_id, Request $request)
     {
-        foreach($request->all() as $invoiceLine) {
+        foreach ($request->all() as $invoiceLine) {
             $invoiceLine = new AddInvoiceLine($invoiceLine);
             $this->newItem($external_id, $invoiceLine);
         }
     }
-    
+
     public function findByExternalId($external_id)
     {
         return Invoice::whereExternalId($external_id)->first();
@@ -223,14 +248,14 @@ class InvoicesController extends Controller
         $formats = array_merge($formats, $currency->toArray());
         $formats['vatPercentage'] = app(Tax::class)->multipleVatRate();
         $formats['vatRate'] = app(Tax::class)->vatRate();
-        
+
         return $formats;
     }
 
     public function overdue()
     {
         $invoices = Invoice::pastDueAt()->get();
-        
+
         return view('invoices.overdue')->withInvoices($invoices);
     }
 }

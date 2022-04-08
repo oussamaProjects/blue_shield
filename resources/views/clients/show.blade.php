@@ -14,7 +14,7 @@
                 </div>
                 <div class="tablet__body">
                     <el-tabs active-name="tasks" style="width:100%">
-                        <el-tab-pane label="{{ __('Projects') }}" name="projects">
+                        <el-tab-pane label="{{ __('Affaires') }}" name="projects">
                             @include('clients.tabs.projectstab')
                         </el-tab-pane>
                         <el-tab-pane label="{{ __('Tasks') }}" name="tasks">

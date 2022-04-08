@@ -93,7 +93,7 @@
                 tour.addStep({
                     element: "#newProject",
                     title: "{{trans("Create project")}}",
-                    content: "{{trans("Projects are used to keep track of tasks that might be related to a bigger assignment for the client. And gives the possibility of multiple people working various tasks and keep track of the tasks.")}}",
+                    content: "{{trans("Affaires are used to keep track of tasks that might be related to a bigger assignment for the client. And gives the possibility of multiple people working various tasks and keep track of the tasks.")}}",
                 })
             }
             // Initialize the tour
