@@ -1,4 +1,5 @@
 <?php
+
 namespace  App\Repositories\Money;
 
 class MoneyConverter
@@ -31,7 +32,7 @@ class MoneyConverter
     }
     public function symbolBeforeFormat()
     {
-        return $this->money->getCurrency()->getSymbol().$this->currencyFormat();
+        return $this->money->getCurrency()->getSymbol() . $this->currencyFormat();
     }
     public function symbolAfterFormat()
     {

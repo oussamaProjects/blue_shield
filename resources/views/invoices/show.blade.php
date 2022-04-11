@@ -44,17 +44,17 @@
                             </div>
                             <hr style="margin-top: 5px;">
                         @endforeach --}}
-                        @if (Entrust::can('modify-invoice-lines'))
+                        {{-- @if (Entrust::can('modify-invoice-lines'))
                             @if (!$invoice->sent_at)
                                 <!-- Insert new item part--->
                                 <div class="tablet__item" style="padding: 0;">
                                     <div class="tablet__item__info">
                                         <button id="time-manager" style="
-                                                    border: 0;
-                                                    padding: 0;
-                                                    background: transparent;
-                                                    font-size:1.5em;
-                                                    color:#337ab7;">
+                                                        border: 0;
+                                                        padding: 0;
+                                                        background: transparent;
+                                                        font-size:1.5em;
+                                                        color:#337ab7;">
                                             <i class="icon ion-md-add-circle"></i>
                                             <span style="font-size:0.7em; font-weight:400;">@lang('Insert new invoice
                                                 line')</span>
@@ -63,7 +63,7 @@
                                 </div>
                                 <hr style="margin-top: 5px;">
                             @endif
-                        @endif
+                        @endif --}}
 
                         <!-- Vat Total price--->
                         <div class="tablet__item" style="padding: 0;">
@@ -113,51 +113,74 @@
             <div class="tablet">
                 <div class="tablet__body" style="padding-bottom: 3em;">
                     <p class="invoice-title">{{ $client->company_name }}
-                        <a href="{{ route('clients.show', $client->external_id) }}"><i class="ion ion-ios-redo "
-                                title="{{ __('Go to client') }}" style="
-                            float: right;
-                            margin-right: 1em;
-                            color:#61788b;
-                            "></i></a>
+                        <a href="{{ route('clients.show', $client->external_id) }}"><i class="ion ion-ios-redo" title="{{ __('Go to client') }}" style="float: right;margin-right: 1em;color:#61788b;"></i></a>
                     </p>
                     <p class="invoice-info">{{ $contact_info->name }}</p>
                     <p class="invoice-info">{{ $contact_info->email }}</p>
                     <hr style="margin-top: 5px;">
                     <div class="row">
+
                         <div class="col-md-6" style="padding-bottom: 1em;">
                             <p class="invoice-info-title">@lang('Invoice created')</p>
                             <p class="invoice-info-subtext">{{ date(carbonDate(), strtotime($invoice->created_at)) }}</p>
                         </div>
+
                         <div class="col-md-6" style="padding-bottom: 1em;">
                             <p class="invoice-info-title">@lang('Invoice date')</p>
                             <p class="invoice-info-subtext">
                                 {{ !$invoice->sent_at ? __('Not send') : date(carbonDate(), strtotime($invoice->sent_at)) }}
                             </p>
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-md-6" style="padding-bottom: 1em;">
                             <p class="invoice-info-title">@lang('Due date')</p>
                             <p class="invoice-info-subtext">
                                 {{ !$invoice->due_at ? __('Not set') : date(carbonDate(), strtotime($invoice->due_at)) }}
                             </p>
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-md-6" style="padding-bottom: 1em;">
+                            <p class="invoice-info-title">@lang('send date')</p>
+                            <p class="invoice-info-subtext">
+                                {{ !$invoice->send_date ? __('Not set') : date(carbonDate(), strtotime($invoice->send_date)) }}
+                            </p>
+                        </div>
+
+                        <div class="col-md-6" style="padding-bottom: 1em;">
+                            <p class="invoice-info-title">@lang('Delivery date')</p>
+                            <p class="invoice-info-subtext">
+                                {{ !$invoice->delivery_date ? __('Not send') : date(carbonDate(), strtotime($invoice->delivery_date)) }}
+                            </p>
+                        </div>
+
+                        <div class="col-md-6" style="padding-bottom: 1em;">
+                            <p class="invoice-info-title">@lang('Acknowledgement date')</p>
+                            <p class="invoice-info-subtext">
+                                {{ !$invoice->ack_date ? __('Not set') : date(carbonDate(), strtotime($invoice->ack_date)) }}
+                            </p>
+                        </div>
+
+                        <div class="col-md-6" style="padding-bottom: 1em;">
                             <p class="invoice-info-title">@lang('Amount due')</p>
                             <p class="invoice-info-subtext">{{ $amountDueFormatted }}</p>
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-md-6" style="padding-bottom: 1em;">
                             <p class="invoice-info-title">@lang('Status')</p>
                             <p class="invoice-info-subtext">
-                                {{ \App\Enums\InvoiceStatus::fromStatus($invoice->status)->getDisplayValue() }}</p>
+                                {{ \App\Enums\InvoiceStatus::fromStatus($invoice->status)->getDisplayValue() }}
+                            </p>
                         </div>
+
                         @if ($source)
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="padding-bottom: 1em;">
                                 <p class="invoice-info-title">@lang('Reference')</p>
                                 <p class="invoice-info-subtext">
-                                    <a
-                                        href="{{ $source->getShowRoute() }}">{{ __(class_basename(get_class($source))) }}</a>
+                                    <a href="{{ $source->getShowRoute() }}">{{ __(class_basename(get_class($source))) }}</a>
                                 </p>
                             </div>
                         @endif
+
                         @if ($invoice->invoice_number != null)
                             <div class="col-md-6">
                                 <p class="invoice-info-title">@lang('Invoice number')</p>
@@ -166,6 +189,7 @@
                                 </p>
                             </div>
                         @endif
+
                         @if ($invoice->offer)
                             <div class="col-md-6">
                                 <p class="invoice-info-title">@lang('Based on')</p>
@@ -176,7 +200,9 @@
                                 </p>
                             </div>
                         @endif
+
                         <hr>
+
                         <div class="col-md-6">
                             @if (Entrust::can('invoice-pay'))
                                 <button type="button" id="update-payment"
@@ -186,6 +212,7 @@
                                     payment')</button>
                             @endif
                         </div>
+
                         <div class="col-md-6">
                             @if (Entrust::can('invoice-send'))
                                 <button type="button" id="sendInvoice" class="btn btn-md btn-brand btn-full-width closebtn"
@@ -200,6 +227,11 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-12">
+                @include('invoices._paymentList')
+        </div>
+
         <div class="col-md-12">
             @if ($invoice->payments->isNotEmpty())
                 @include('invoices._paymentList')
@@ -216,17 +248,12 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">
-
                             {{ __('Are you sure?') }}
                         </h4>
                         <p>{{ __('Once a invoice has been send, no new invoice lines can be added') }}</p>
-                        {!! Form::open([
-    'method' => 'post',
-    'route' => ['invoice.sent', $invoice->external_id],
-]) !!}
+                        {!! Form::open(['method' => 'post', 'route' => ['invoice.sent', $invoice->external_id]]) !!}
                         @if ($apiconnected)
                             <p>{{ __('We have found this contact from your billing integration, do you wish for us to create the invoice in your your billing system as well?, than please choose a contact below') }}
                             </p>
@@ -267,8 +294,7 @@
                             <textarea name="message" id="" rows="13"
                                 class="form-control">@lang("Dear :name\n\nThank you, for being a customer at :company\n\nHere is you Invoice on :price\n\nClick the link below to download the invoice\n\n[link-to-pdf]\n\nRegards\n---\n:company", ["name" => $invoice->client->primaryContact->name, "company" => $companyName, "price" => $finalPrice])</textarea>
                         </div>
-                        <input type="submit" value="{{ __('Send invoice') }}"
-                            class="btn btn-md btn-brand btn-full-width closebtn" id="close-invoice">
+                        <input type="submit" value="{{ __('Send invoice') }}" class="btn btn-md btn-brand btn-full-width closebtn" id="close-invoice">
                         {!! Form::close() !!}
                     </div>
 

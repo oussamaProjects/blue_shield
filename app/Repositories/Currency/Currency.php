@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories\Currency;
 
 class Currency
@@ -43,6 +44,16 @@ class Currency
      */
     protected $symbolPlacement;
     private static $currencies = [
+        'MAD' => [
+            'code'              => 'DH',
+            'title'             => 'Moroccan dirham',
+            'symbol'            => 'Dh',
+            'precision'         => 2,
+            'thousandSeparator' => '',
+            'decimalSeparator'  => '',
+            'symbolPlacement'   => 'after',
+            'vatPercentage'     => 2000,
+        ],
         'DKK' => [
             'code'              => 'DKK',
             'title'             => 'Danish Krone',
@@ -63,6 +74,7 @@ class Currency
             'symbolPlacement'   => 'before',
             'vatPercentage'     => 725,
         ],
+
         'EUR' => [
             'title'             => 'Euro',
             'code'              => 'EUR',

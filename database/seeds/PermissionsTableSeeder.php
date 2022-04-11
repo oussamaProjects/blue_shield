@@ -15,7 +15,7 @@ class PermissionsTableSeeder extends Seeder
         /**
          * User Permission
          */
-        
+
         $createUser = new Permission;
         $createUser->display_name = 'Create user';
         $createUser->name = 'user-create';
@@ -39,9 +39,9 @@ class PermissionsTableSeeder extends Seeder
 
 
         /**
-        * Client Permission
-        */
-        
+         * Client Permission
+         */
+
         $createClient = new Permission;
         $createClient->display_name = 'Create client';
         $createClient->name = 'client-create';
@@ -78,9 +78,16 @@ class PermissionsTableSeeder extends Seeder
         $deleteDocument->save();
 
         /**
-        * Tasks Permission
-        */
-        
+         * Tasks Permission
+         */
+
+        $createTask = new Permission;
+        $createTask->display_name = 'View task table';
+        $createTask->name = 'task-view';
+        $createTask->description = 'Permission to view tasks';
+        $createTask->grouping = 'task';
+        $createTask->save();
+
         $createTask = new Permission;
         $createTask->display_name = 'Create task';
         $createTask->name = 'task-create';
@@ -123,11 +130,10 @@ class PermissionsTableSeeder extends Seeder
         $taskUploadFiles->grouping = 'task';
         $taskUploadFiles->save();
 
-
         $invoicePermission = new Permission;
-        $invoicePermission->display_name = 'Modify invoice lines on a invoice / task';
-        $invoicePermission->name = 'modify-invoice-lines';
-        $invoicePermission->description = 'Permission to create and update invoice lines on task, and invoices';
+        $invoicePermission->display_name = "See invoices table";
+        $invoicePermission->name = 'invoice-view';
+        $invoicePermission->description = "Permission to see invoices on customer, and it's associated task";
         $invoicePermission->grouping = 'invoice';
         $invoicePermission->save();
 
@@ -135,6 +141,20 @@ class PermissionsTableSeeder extends Seeder
         $invoicePermission->display_name = "See invoices and it's invoice lines";
         $invoicePermission->name = 'invoice-see';
         $invoicePermission->description = "Permission to see invoices on customer, and it's associated task";
+        $invoicePermission->grouping = 'invoice';
+        $invoicePermission->save();
+
+        $invoicePermission = new Permission;
+        $invoicePermission->display_name = "Manage invoices";
+        $invoicePermission->name = 'invoice-manage';
+        $invoicePermission->description = "Be able to manage absences for all users";
+        $invoicePermission->grouping = 'invoice';
+        $invoicePermission->save();
+
+        $invoicePermission = new Permission;
+        $invoicePermission->display_name = 'Modify invoice lines on a invoice / task';
+        $invoicePermission->name = 'modify-invoice-lines';
+        $invoicePermission->description = 'Permission to create and update invoice lines on task, and invoices';
         $invoicePermission->grouping = 'invoice';
         $invoicePermission->save();
 
@@ -152,9 +172,24 @@ class PermissionsTableSeeder extends Seeder
         $invoicePermission->grouping = 'invoice';
         $invoicePermission->save();
 
+
+        $invoicePermission = new Permission;
+        $invoicePermission->display_name = "Create a new invoice";
+        $invoicePermission->name = 'invoice-create';
+        $invoicePermission->description = "Be able to create a new invoice";
+        $invoicePermission->grouping = 'invoice';
+        $invoicePermission->save();
+
         /**
-        * Leads Permission
-        */
+         * Leads Permission
+         */
+        $createLead = new Permission;
+        $createLead->display_name = 'View lead';
+        $createLead->name = 'lead-view';
+        $createLead->description = 'Permission to view lead';
+        $createLead->grouping = 'lead';
+        $createLead->save();
+
         $createLead = new Permission;
         $createLead->display_name = 'Create lead';
         $createLead->name = 'lead-create';
@@ -184,9 +219,9 @@ class PermissionsTableSeeder extends Seeder
         $assignNewUserLead->save();
 
         /**
-        * Project Permission
-        */
-        
+         * Project Permission
+         */
+
         $createproject = new Permission;
         $createproject->display_name = 'Create project';
         $createproject->name = 'project-create';
@@ -307,6 +342,5 @@ class PermissionsTableSeeder extends Seeder
             'description' => 'Be able to delete an offer',
             'grouping' => 'offer',
         ]);
-
     }
 }

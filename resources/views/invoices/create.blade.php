@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('heading')
-    {{-- {{ __('Create invoice') }} <span class="small">{{ $client ? '(' . $client->company_name . ')' : '' }}</span> --}}
+    {{ __('Create invoice') }} <span class="small">{{ $client ? '(' . $client->company_name . ')' : '' }}</span>
 @stop
 
 @section('content')
@@ -19,8 +19,8 @@
                                     <label for="title" class="control-label thin-weight">@lang('Title')</label>
                                     <input type="text" name="title" id="title" class="form-control">
                                 </div>
-                            </div> 
-                            
+                            </div>
+
                         </div>
 
                         <div class="row">
@@ -30,21 +30,21 @@
                                     <label for="external_id" class="control-label thin-weight">@lang('external_id')</label>
                                     <input type="text" name="external_id" id="external_id" class="form-control">
                                 </div>
-                            </div> 
-                            
+                            </div>
+
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="bd_id" class="control-label thin-weight">@lang('bd_id')</label>
                                     <input type="number" name="bd_id" id="bd_id" class="form-control">
                                 </div>
-                            </div> 
+                            </div>
 
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="total" class="control-label thin-weight">@lang('Total')</label>
                                     <input type="number" name="total" id="total" class="form-control">
                                 </div>
-                            </div> 
+                            </div>
 
                         </div>
 
@@ -108,29 +108,60 @@
                             </div>
                         @endif
 
-                        <div class="form-group">
-                            <label for="deadline" class="control-label thin-weight">@lang('Deadline')</label>
-                            <input type="text" id="deadline" name="deadline" data-value="{{ now()->addDays(3) }}"
-                                class="form-control">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="create_at" class="control-label thin-weight">@lang('create_at')</label>
+                                    <input type="text" id="create_at" name="create_at"
+                                        data-value="{{ now()->addDays(3) }}" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="deadline" class="control-label thin-weight">@lang('Deadline')</label>
+                                    <input type="text" id="deadline" name="deadline" data-value="{{ now()->addDays(3) }}"
+                                        class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="send_date" class="control-label thin-weight">@lang('send_date')</label>
+                                    <input type="text" id="send_date" name="send_date" data-value="{{ now()->addDays(3) }}"
+                                        class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="due_at" class="control-label thin-weight">@lang('due_at')</label>
+                                    <input type="text" id="due_at" name="due_at" data-value="{{ now()->addDays(3) }}"
+                                        class="form-control">
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="create_at" class="control-label thin-weight">@lang('create_at')</label>
-                            <input type="text" id="create_at" name="create_at" data-value="{{ now()->addDays(3) }}"
-                                class="form-control">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="delivery_date" class="control-label thin-weight">@lang('delivery_date')</label>
+                                    <input type="text" id="delivery_date" name="delivery_date" data-value="{{ now()->addDays(3) }}"
+                                        class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="ack_date" class="control-label thin-weight">@lang('ack_date')</label>
+                                    <input type="text" id="ack_date" name="ack_date"
+                                        data-value="{{ now()->addDays(3) }}" class="form-control">
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="sent_at" class="control-label thin-weight">@lang('sent_at')</label>
-                            <input type="text" id="sent_at" name="sent_at" data-value="{{ now()->addDays(3) }}"
-                                class="form-control">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="due_at" class="control-label thin-weight">@lang('due_at')</label>
-                            <input type="text" id="due_at" name="due_at" data-value="{{ now()->addDays(3) }}"
-                                class="form-control">
-                        </div>
 
                         <div class="form-group">
                             <label for="status_id" class="control-label thin-weight">@lang('Status')</label>
@@ -184,6 +215,21 @@
                 }
             });
 
+            
+            $('#create_at').pickadate({
+                hiddenName: true,
+                format: "{{ frontendDate() }}",
+                formatSubmit: 'yyyy/mm/dd',
+                closeOnClear: false,
+            });
+            
+            $('#due_at').pickadate({
+                hiddenName: true,
+                format: "{{ frontendDate() }}",
+                formatSubmit: 'yyyy/mm/dd',
+                closeOnClear: false,
+            });
+            
             $('#deadline').pickadate({
                 hiddenName: true,
                 format: "{{ frontendDate() }}",
@@ -198,14 +244,21 @@
                 closeOnClear: false,
             });
 
-            $('#create_at').pickadate({
+            $('#send_date').pickadate({
+                hiddenName: true,
+                format: "{{ frontendDate() }}",
+                formatSubmit: 'yyyy/mm/dd',
+                closeOnClear: false,
+            });
+           
+            $('#delivery_date').pickadate({
                 hiddenName: true,
                 format: "{{ frontendDate() }}",
                 formatSubmit: 'yyyy/mm/dd',
                 closeOnClear: false,
             });
 
-            $('#due_at').pickadate({
+            $('#ack_date').pickadate({
                 hiddenName: true,
                 format: "{{ frontendDate() }}",
                 formatSubmit: 'yyyy/mm/dd',
@@ -227,13 +280,44 @@
 
             });
 
+            myDropzone = null;
+            @if(Entrust::can('invoice-upload-files') && $filesystem_integration)
+            var myDropzone = new Dropzone("#createTaskForm", {
+                autoProcessQueue: false,
+                uploadMultiple: true,
+                parallelUploads: 5,
+                maxFiles: 50,
+                addRemoveLinks: true,
+                previewsContainer: "#dropzone-images",
+                clickable:'#dropzone-images',
+                paramName: 'images',
+                acceptedFiles: "image/*,application/pdf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.spreadsheetml.template, application/vnd.openxmlformats-officedocument.presentationml.template, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.openxmlformats-officedocument.presentationml.slide, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.wordprocessingml.template, application/vnd.ms-excel.addin.macroEnabled.12, application/vnd.ms-excel.sheet.binary.macroEnabled.12,text/rtf,text/plain,audio/*,video/*,.csv,.doc,.xls,.ppt,application/vnd.ms-powerpoint,.pptx",
+
+            });
+
+            myDropzone.on("success", function(file, response) {
+                window.location.href = ("/invoices/"+response.invoice_external_id)
+            });
+
+            myDropzone.on("processing", function(file, response) {
+                $('input[type="submit"]').attr("disabled", true);
+            });
+            myDropzone.on("error", function(file, response) {
+                $('input[type="submit"]').attr("disabled", false);
+            });
+
+            @endif
+
             $('input[type="submit"]').on("click", function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+
                 if (myDropzone != null && myDropzone.getQueuedFiles().length > 0) {
                     myDropzone.processQueue();
 
                 } else {
+
+                    console.debug(  $("#createInvoiceForm").serialize());
                     $.ajax({
                         type: 'post',
                         url: '{{ route('invoices.store') }}',
@@ -244,11 +328,13 @@
                                     .project_external_id)
                             } else {
                                 window.location.href = ("/invoices/" + response
-                                    .task_external_id)
+                                    .invoice_external_id)
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
-
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                            console.log(errorThrown);
                             if (jqXHR.responseJSON.errors.title != undefined) {
                                 $('.title-alert').show();
                             } else {

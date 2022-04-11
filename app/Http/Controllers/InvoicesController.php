@@ -36,6 +36,14 @@ use Illuminate\Support\Facades\Validator;
 
 class InvoicesController extends Controller
 {
+
+
+    const CREATED = 'created';
+    const UPDATED_STATUS = 'updated_status';
+    const UPDATED_TIME = 'updated_time';
+    const UPDATED_ASSIGN = 'updated_assign';
+    const UPDATED_DEADLINE = 'updated_deadline';
+
     protected $clients;
     protected $invoices;
 
@@ -46,12 +54,24 @@ class InvoicesController extends Controller
      */
     public function index()
     {
-        $invoices = Invoice::pastDueAt()->get();
+
+        if (!auth()->user()->can('invoice-view')) {
+            session()->flash('flash_message_warning', __('You do not have permission to view those invoice'));
+            return redirect()->route('dashboard');
+        }
+
+        $invoices = Invoice::all();
         return view('invoices.index')->withInvoices($invoices);
     }
 
     public function create($client_external_id = null, $project_external_id = null)
     {
+
+        if (!auth()->user()->can('invoice-manage')) {
+            session()->flash('flash_message_warning', __('You do not have permission to add this invoice'));
+            return redirect()->route('dashboard');
+        }
+
         $projects = null;
         $client =  Client::whereExternalId($client_external_id);
         $project = Project::whereExternalId($project_external_id)->first();
@@ -69,6 +89,73 @@ class InvoicesController extends Controller
             ->withProject($project ?: null)
             ->withStatuses(Status::typeOfTask()->pluck('title', 'id'))
             ->with('filesystem_integration', Integration::whereApiType('file')->first());
+    }
+
+    /**
+     * Store the specified resource.
+     *
+     * @param Invoice $invoice
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        if (!auth()->user()->can('invoice-manage')) {
+            session()->flash('flash_message_warning', __('You do not have permission to create this invoice'));
+            return redirect()->route('dashboard');
+        }
+
+        $project = null;
+        if ($request->client_external_id) {
+            $client = Client::whereExternalId($request->client_external_id);
+        }
+
+        if ($request->project_external_id) {
+            $project = Project::whereExternalId($request->project_external_id)->first();
+        }
+
+        $input = array_merge(
+            $request->all(),
+            []
+        );
+
+        $invoice = Invoice::create(
+            [
+                'title' => $request->title,
+                // 'external_id' => Uuid::uuid4()->toString(),
+                'invoice_number' => app(InvoiceNumberService::class)->nextInvoiceNumber(),
+                'external_id' => Uuid::uuid4()->toString(),
+                'integration_invoice_id' => $request->external_id,
+                // 'description' => clean($request->description),
+                'db_id' => $request->bd_id,
+                'total' => $request->total,
+                'create_at' => Carbon::parse($request->create_at),
+                'deadline' => Carbon::parse($request->deadline),
+                'send_date' => Carbon::parse($request->send_date),
+                'due_at' => Carbon::parse($request->due_at),
+                'delivery_date' => Carbon::parse($request->delivery_date),
+                'ack_date' => Carbon::parse($request->ack_date),
+                'user_assigned_id' => auth()->id(),
+                'user_created_id' => auth()->id(),
+                'client_id' => $client->id,
+                'project_id' => optional($project)->id,
+                'status_id' => $request->status_id,
+                'status' => 'draft',
+            ]
+        );
+
+        $insertedExternalId = $invoice->external_id;
+
+        Session()->flash('flash_message', __('Invoice successfully added'));
+        event(new \App\Events\InvoiceAction($invoice, self::CREATED));
+
+        // if (!is_null($request->images)) {
+        //     foreach ($request->file('images') as $image) {
+        //         $this->upload($image, $invoice);
+        //     }
+        // }
+        //Hack to make dropzone js work, as it only called with AJAX and not form submit
+        return response()->json(['invoice_external_id' => $invoice->external_id, 'project_external_id' => $project ? $project->external_id : null]);
+        return redirect()->route("invoice.show", $insertedExternalId);
     }
 
     /**
@@ -107,12 +194,14 @@ class InvoicesController extends Controller
         $vatPrice = $invoiceCalculator->getVatTotal();
         $amountDue = $invoiceCalculator->getAmountDue();
 
+        // dd($vatPrice);
+
         return view('invoices.show')
             ->withInvoice($invoice)
             ->withApiconnected($apiConnected)
             ->withContacts($invoiceContacts)
             ->withfinalPrice(app(MoneyConverter::class, ['money' => $totalPrice])->format())
-            ->withsubPrice(app(MoneyConverter::class, ['money' => $subPrice])->format())
+            ->withsubPrice(app(MoneyConverter::class, ['money' => $amountDue])->format())
             ->withVatPrice(app(MoneyConverter::class, ['money' => $vatPrice])->format())
             ->withAmountDueFormatted(app(MoneyConverter::class, ['money' => $amountDue])->format())
             ->withPrimaryContact(optional($primaryContact)[0])

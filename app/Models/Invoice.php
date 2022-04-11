@@ -26,7 +26,9 @@ class Invoice extends Model
 
     protected $fillable = [
         'status',
+        'invoice_number',
         'sent_at',
+        'send_date',
         'due_at',
         'client_id',
         'integration_invoice_id',
@@ -35,10 +37,19 @@ class Invoice extends Model
         'source_type',
         'external_id',
         'offer_id',
+        'delivery_date',
+        'ack_date',
+        'db_id',
+        'total',
     ];
 
     protected $dates = [
+        'created_at',
+        'sent_at',
+        'send_date',
         'due_at',
+        'delivery_date',
+        'ack_date',
     ];
 
     /**
