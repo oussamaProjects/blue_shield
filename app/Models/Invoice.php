@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Models;
 
 use Carbon\Carbon;
 use App\Enums\OfferStatus;
 use App\Enums\InvoiceStatus;
+use App\Models\Reminder;
 use App\Repositories\Money\Money;
 use Illuminate\Database\Eloquent\Model;
 use App\Services\Invoice\InvoiceCalculator;
@@ -87,6 +89,12 @@ class Invoice extends Model
         return $this->hasMany(Payment::class, 'invoice_id', 'id');
     }
 
+    public function reminders()
+    {
+        return $this->belongsToMany(Reminder::class, 'invoice_reminder', 'invoice_id', 'reminder_id')->using('App\Models\InvoiceReminderPivot');;
+    }
+
+
     public function canUpdateInvoice()
     {
         if ($this->isSent()) {
@@ -98,6 +106,41 @@ class Invoice extends Model
     public function isSent()
     {
         return $this->sent_at != null;
+    }
+
+    public function vddf_date()
+    {
+        return $this->sent_at->addDays(3);
+    }
+
+    public function is_vddf_date()
+    { 
+        return $this->sent_at->addDays(3) <= today();
+    }
+
+    public function cdef_date()
+    {
+        return $this->sent_at->addDays(14);
+    }
+    public function is_cdef_date()
+    {
+        return $this->sent_at->addDays(14) <= today();
+    }
+    public function cap_date()
+    {
+        return $this->due_at->subDays(5);
+    }
+    public function is_cap_date()
+    {
+        return $this->due_at->subDays(5) <= today();
+    }
+    public function rp_date()
+    {
+        return $this->due_at->subDays(1);
+    }
+    public function is_rp_date()
+    {
+        return $this->due_at->subDays(1) <= today();
     }
 
     public function removeReference(): bool

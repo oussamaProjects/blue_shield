@@ -155,7 +155,7 @@
            });
 
             myDropzone = null;
-            @if(Entrust::can('task-upload-files') && $filesystem_integration)
+            // @if(Entrust::can('task-upload-files') && $filesystem_integration)
             var myDropzone = new Dropzone("#createTaskForm", {
                 autoProcessQueue: false,
                 uploadMultiple: true,
@@ -180,7 +180,8 @@
                 $('input[type="submit"]').attr("disabled", false);
             });
 
-            @endif
+            // @endif
+            
             $('input[type="submit"]').on("click", function (e) {
                 e.preventDefault();
                 e.stopPropagation();

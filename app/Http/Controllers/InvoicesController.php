@@ -29,6 +29,7 @@ use App\Http\Requests\Invoice\AddInvoiceLine;
 use App\Models\Offer;
 use App\Models\Product;
 use App\Models\Project;
+use App\Models\Reminder;
 use App\Models\Status;
 use App\Models\User;
 use App\Services\InvoiceNumber\InvoiceNumberService;
@@ -208,6 +209,7 @@ class InvoicesController extends Controller
             ->withPaymentSources(PaymentSource::values())
             ->withAmountDue($amountDue)
             ->withSource($invoice->source)
+            ->withReminders(Reminder::all())
             ->withCompanyName(Setting::first()->company);
     }
 
@@ -329,6 +331,78 @@ class InvoicesController extends Controller
             ->rawColumns(['delete'])
             ->make(true);
     }
+
+    public function remindersDataTable(Invoice $invoice)
+    {
+        $reminders = $invoice->reminders()->select(
+            ['name', 'conform', 'description', 'attachments']
+        );
+
+
+
+        return Datatables::of($reminders)
+            ->editColumn('name', function ($reminders) {
+                return __($reminders->name);
+            })
+            ->editColumn('conform', function ($reminders) {
+                return ($reminders->conform) ? 'Conform' : 'No Conform';
+            })
+            ->editColumn('description', function ($reminders) {
+                return substr($reminders->description, 0, 80);
+            })
+            ->editColumn('attachments', function ($reminders) {
+                $attachmentNames = '';
+                $attachments = json_decode($reminders->attachments, true);
+                foreach ($attachments as $attachment) {
+                    $attachmentNames .= ($attachment == 1) ? ' Attachements' : '';
+                    $attachmentNames .= ($attachment == 2) ? ' Bon de Livraison' : '';
+                    $attachmentNames .= ($attachment == 3) ? ' Ordre de Travail' : '';
+                    $attachmentNames .= ($attachment == 4) ? ' Bon de commande' : '';
+                    $attachmentNames .= ($attachment == 5) ? ' Fiche de controle' : '';
+                    $attachmentNames .= ($attachment == 6) ? ' Fiche de pointage' : '';
+                }
+                return $attachmentNames;
+            })
+            ->addColumn('delete', '
+                <form action=" " method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="submit" name="submit" value="' . __('Delete') . '" class="btn btn-link" onClick="return confirm(\'Are you sure you want to delete the reminder?\')"">
+                    {{csrf_field()}}
+                </form>')
+            ->rawColumns(['delete'])
+            ->make(true);
+    }
+
+    public function DataTable(Invoice $invoice)
+    {
+        $payments = $invoice->payments()->select(
+            ['external_id', 'amount', 'payment_date', 'description', 'payment_source']
+        );
+
+        return Datatables::of($payments)
+            ->editColumn('amount', function ($payments) {
+                return app(MoneyConverter::class, ['money' => $payments->price])->format();
+            })
+            ->editColumn('payment_date', function ($payments) {
+                return $payments->payment_date ? with(new Carbon($payments->payment_date))
+                    ->format(carbonDate()) : '';
+            })
+            ->editColumn('payment_source', function ($payments) {
+                return __($payments->payment_source);
+            })
+            ->editColumn('description', function ($payments) {
+                return substr($payments->description, 0, 80);
+            })
+            ->addColumn('delete', '
+                <form action="{{ route(\'payment.destroy\', $external_id) }}" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" name="submit" value="' . __('Delete') . '" class="btn btn-link" onClick="return confirm(\'Are you sure you want to delete the payment?\')"">
+            {{csrf_field()}}
+            </form>')
+            ->rawColumns(['delete'])
+            ->make(true);
+    }
+
 
     public function moneyFormat()
     {

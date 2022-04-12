@@ -171,6 +171,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/', 'InvoicesController@store')->name('invoices.store');
         Route::get('/', 'InvoicesController@index')->name('invoices.index'); 
         Route::get('/payments-data/{invoice}', 'InvoicesController@paymentsDataTable')->name('invoice.paymentsDataTable');
+        Route::get('/reminders-data/{invoice}', 'InvoicesController@remindersDataTable')->name('invoice.remindersDataTable');
     });
 
     Route::get('/money-format', 'InvoicesController@moneyFormat')->name('money.format');
@@ -190,6 +191,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'payment'], function () {
         Route::delete('/{payment}', 'PaymentsController@destroy')->name('payment.destroy');
         Route::post('/add-payment/{invoice}', 'PaymentsController@addPayment')->name('payment.add');
+    });
+
+    Route::group(['prefix' => 'reminder'], function () {
+        Route::delete('/{reminder}', 'ReminderController@destroy')->name('reminder.destroy');
+        Route::post('/add-reminder/{invoice}', 'ReminderController@addReminder')->name('reminder.add');
     });
 
     /** 

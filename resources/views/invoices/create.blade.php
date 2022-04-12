@@ -84,11 +84,12 @@
                                     @if ($clients->isEmpty())
                                         <option value="" default></option>
                                         <option value="new_client">+ @lang('Create New Client')</option>
-                                    @endif
-                                    @foreach ($clients as $client => $clientK)
+                                        @endif
+                                        @foreach ($clients as $client => $clientK)
                                         <option value="{{ $client }}" data-tokens="{{ $clientK }}">
                                             {{ $clientK }}</option>
-                                    @endforeach
+                                            @endforeach
+                                            <option value="new_client">+ @lang('Create New Client')</option>
                                 </select>
                             @endif
                         </div>
