@@ -44,7 +44,7 @@
                             <hr style="margin-top: 5px;">
                         @endforeach --}}
 
-                        @if (Entrust::can('modify-invoice-lines'))
+                        {{-- @if (Entrust::can('modify-invoice-lines'))
                             @if (!$invoice->sent_at)
                                 <!-- Insert new item part--->
                                 <div class="tablet__item" style="padding: 0;">
@@ -52,14 +52,13 @@
                                         <button id="time-manager"
                                             style="border: 0;padding: 0;background: transparent;font-size:1.5em;color:#337ab7;">
                                             <i class="icon ion-md-add-circle"></i>
-                                            <span style="font-size:0.7em; font-weight:400;">@lang('Insert new invoice
-                                                line')</span>
+                                            <span style="font-size:0.7em; font-weight:400;">@lang('Insert new invoice line')</span>
                                         </button>
                                     </div>
                                 </div>
                                 <hr style="margin-top: 5px;">
                             @endif
-                        @endif
+                        @endif --}}
 
                         <!-- Vat Total price--->
                         <div class="tablet__item" style="padding: 0;">
@@ -158,40 +157,40 @@
                     <div class="row">
 
                         <div class="col-md-6" style="padding-bottom: 1em;">
-                            <p class="invoice-info-title">@lang('Invoice created')</p>
+                            <p class="invoice-info-title">@lang('Facture créée')</p>
                             <p class="invoice-info-subtext">{{ date(carbonDate(), strtotime($invoice->created_at)) }}</p>
                         </div>
 
                         <div class="col-md-6" style="padding-bottom: 1em;">
-                            <p class="invoice-info-title">@lang('Invoice date')</p>
+                            <p class="invoice-info-title">@lang('Date de facturation')</p>
                             <p class="invoice-info-subtext">
                                 {{ !$invoice->sent_at ? __('Not send') : date(carbonDate(), strtotime($invoice->sent_at)) }}
                             </p>
                         </div>
 
                         <div class="col-md-6" style="padding-bottom: 1em;">
-                            <p class="invoice-info-title">@lang('Due date')</p>
+                            <p class="invoice-info-title">@lang('Date d\'échéance')</p>
                             <p class="invoice-info-subtext">
                                 {{ !$invoice->due_at ? __('Not set') : date(carbonDate(), strtotime($invoice->due_at)) }}
                             </p>
                         </div>
 
                         <div class="col-md-6" style="padding-bottom: 1em;">
-                            <p class="invoice-info-title">@lang('send date')</p>
+                            <p class="invoice-info-title">@lang('Date d\'envoye')</p>
                             <p class="invoice-info-subtext">
                                 {{ !$invoice->send_date ? __('Not set') : date(carbonDate(), strtotime($invoice->send_date)) }}
                             </p>
                         </div>
 
                         <div class="col-md-6" style="padding-bottom: 1em;">
-                            <p class="invoice-info-title">@lang('Delivery date')</p>
+                            <p class="invoice-info-title">@lang('Date de livraison')</p>
                             <p class="invoice-info-subtext">
                                 {{ !$invoice->delivery_date ? __('Not send') : date(carbonDate(), strtotime($invoice->delivery_date)) }}
                             </p>
                         </div>
 
                         <div class="col-md-6" style="padding-bottom: 1em;">
-                            <p class="invoice-info-title">@lang('Acknowledgement date')</p>
+                            <p class="invoice-info-title">@lang('Date d\'accusé de réception')</p>
                             <p class="invoice-info-subtext">
                                 {{ !$invoice->ack_date ? __('Not set') : date(carbonDate(), strtotime($invoice->ack_date)) }}
                             </p>
@@ -219,9 +218,18 @@
                             </div>
                         @endif
 
+                        @if ($invoice->integration_invoice_id != null)
+                            <div class="col-md-6">
+                                <p class="invoice-info-title">@lang('Numéro de facture')</p>
+                                <p class="invoice-info-subtext">
+                                    {{ $invoice->integration_invoice_id }}
+                                </p>
+                            </div>
+                        @endif
+
                         @if ($invoice->invoice_number != null)
                             <div class="col-md-6">
-                                <p class="invoice-info-title">@lang('Invoice number')</p>
+                                <p class="invoice-info-title">@lang('Numéro de facture interne')</p>
                                 <p class="invoice-info-subtext">
                                     {{ $invoice->invoice_number }}
                                 </p>

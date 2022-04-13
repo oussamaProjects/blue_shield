@@ -110,21 +110,21 @@ class Invoice extends Model
 
     public function vddf_date()
     {
-        return $this->sent_at->addDays(3);
+        return $this->isSent() ? $this->sent_at->addDays(3) : 0;
     }
 
     public function is_vddf_date()
-    { 
-        return $this->sent_at->addDays(3) <= today();
+    {
+        return $this->isSent() ? $this->sent_at->addDays(3) <= today() : 0;
     }
 
     public function cdef_date()
     {
-        return $this->sent_at->addDays(14);
+        return $this->isSent() ? $this->sent_at->addDays(14) : 0;
     }
     public function is_cdef_date()
     {
-        return $this->sent_at->addDays(14) <= today();
+        return $this->isSent() ? $this->sent_at->addDays(14) <= today() : 0;
     }
     public function cap_date()
     {

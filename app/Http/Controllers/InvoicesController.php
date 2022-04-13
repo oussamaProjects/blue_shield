@@ -352,14 +352,16 @@ class InvoicesController extends Controller
             })
             ->editColumn('attachments', function ($reminders) {
                 $attachmentNames = '';
-                $attachments = json_decode($reminders->attachments, true);
-                foreach ($attachments as $attachment) {
-                    $attachmentNames .= ($attachment == 1) ? ' Attachements' : '';
-                    $attachmentNames .= ($attachment == 2) ? ' Bon de Livraison' : '';
-                    $attachmentNames .= ($attachment == 3) ? ' Ordre de Travail' : '';
-                    $attachmentNames .= ($attachment == 4) ? ' Bon de commande' : '';
-                    $attachmentNames .= ($attachment == 5) ? ' Fiche de controle' : '';
-                    $attachmentNames .= ($attachment == 6) ? ' Fiche de pointage' : '';
+                if (isset($reminders->attachments)) {
+                    $attachments = json_decode($reminders->attachments, true);
+                    foreach ($attachments as $attachment) {
+                        $attachmentNames .= ($attachment == 1) ? ' Attachements' : '';
+                        $attachmentNames .= ($attachment == 2) ? ' Bon de Livraison' : '';
+                        $attachmentNames .= ($attachment == 3) ? ' Ordre de Travail' : '';
+                        $attachmentNames .= ($attachment == 4) ? ' Bon de commande' : '';
+                        $attachmentNames .= ($attachment == 5) ? ' Fiche de controle' : '';
+                        $attachmentNames .= ($attachment == 6) ? ' Fiche de pointage' : '';
+                    }
                 }
                 return $attachmentNames;
             })

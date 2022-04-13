@@ -78,8 +78,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/create/{client_external_id}/{project_external_id}', 'TasksController@create')->name('client.project.task.create');
         Route::post('/updateproject/{external_id}', 'TasksController@updateProject')->name('tasks.update.project');
     });
+    
     Route::resource('tasks', 'TasksController');
-
+    
+    Route::resource('reports', 'ReportController');
+    
     /**
      * Leads
      */

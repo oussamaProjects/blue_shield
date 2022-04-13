@@ -10,6 +10,9 @@
 <link href="{{ URL::asset('css/fonts/flaticon.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ URL::asset('css/bootstrap-tour-standalone.min.css') }}" rel="stylesheet" type="text/css">
 <link href="{{ URL::asset('css/picker.classic.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ URL::asset('css/reports-style.css') }}" rel="stylesheet" type="text/css">
+
+
 <link rel="stylesheet" href="https://unpkg.com/vis-timeline@7.3.4/styles/vis-timeline-graph2d.min.css">
 <link rel="stylesheet" href="{{ asset(elixir('css/vendor.css')) }}">
 <link rel="stylesheet" href="{{ asset(elixir('css/app.css')) }}">
@@ -49,7 +52,7 @@
 <nav id="myNavmenu" class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" role="navigation">
     <div class="list-group panel">
         <p class=" list-group-item siderbar-top" title="">
-            <img src="{{url('images/daybyday-logo-white.png')}}" alt="" style="width: 100%; margin: 1em 0;"></p>
+            <img src="{{url('images/daybyday-logo-whites.png')}}" alt="" style="width: 100%; margin: 1em 0;"></p>
         <a href="{{route('dashboard')}}" class=" list-group-item" data-parent="#MainMenu">
             <i class="fa fa-home sidebar-icon"></i><span id="menu-txt">{{ __('Dashboard') }} </span>
                 </a>
@@ -307,8 +310,11 @@
 
 <!-- /#page-content-wrapper -->
 </div>
-<script src="/js/manifest.js"></script>
-<script src="/js/vendor.js"></script>
+
+
+
+<script type="text/javascript" src="{{ URL::asset('/js/manifest.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('/js/vendor.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/app.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/dropzone.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/jquery.dataTables.min.js') }}"></script>
