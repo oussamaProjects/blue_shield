@@ -33,6 +33,7 @@ use App\Models\Reminder;
 use App\Models\Status;
 use App\Models\User;
 use App\Services\InvoiceNumber\InvoiceNumberService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class InvoicesController extends Controller
@@ -197,6 +198,13 @@ class InvoicesController extends Controller
 
         // dd($vatPrice);
 
+        $invoice_reminders = DB::table('invoices')
+            ->select('reminders.id', 'reminders.name', 'reminders.description', 'invoice_reminder.note', 'invoice_reminder.conform', 'invoice_reminder.attachments', 'invoices.reporting_date')
+            ->join('invoice_reminder', 'invoice_reminder.invoice_id', '=', 'invoices.id')
+            ->join('reminders', 'invoice_reminder.reminder_id', '=', 'reminders.id')
+            ->where('invoices.id', $invoice->id)
+            ->get();
+
         return view('invoices.show')
             ->withInvoice($invoice)
             ->withApiconnected($apiConnected)
@@ -210,6 +218,7 @@ class InvoicesController extends Controller
             ->withAmountDue($amountDue)
             ->withSource($invoice->source)
             ->withReminders(Reminder::all())
+            ->withInvoiceReminders($invoice_reminders)
             ->withCompanyName(Setting::first()->company);
     }
 
@@ -335,20 +344,24 @@ class InvoicesController extends Controller
     public function remindersDataTable(Invoice $invoice)
     {
         $reminders = $invoice->reminders()->select(
-            ['name', 'conform', 'description', 'attachments']
+            ['name', 'description', 'conform', 'note', 'attachments', 'invoice_reminder.created_at']
         );
-
-
 
         return Datatables::of($reminders)
             ->editColumn('name', function ($reminders) {
                 return __($reminders->name);
             })
+            ->editColumn('description', function ($reminders) {
+                return __($reminders->description);
+            })
+            ->editColumn('created_at', function ($reminders) {
+                return __($reminders->created_at);
+            })
             ->editColumn('conform', function ($reminders) {
                 return ($reminders->conform) ? 'Conform' : 'No Conform';
             })
-            ->editColumn('description', function ($reminders) {
-                return substr($reminders->description, 0, 80);
+            ->editColumn('note', function ($reminders) {
+                return substr($reminders->note, 0, 80);
             })
             ->editColumn('attachments', function ($reminders) {
                 $attachmentNames = '';

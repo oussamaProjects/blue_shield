@@ -275,6 +275,7 @@
             </div>
         </div>
 
+
         {{-- <div class="col-md-12">
             @if ($invoice->payments->isNotEmpty())
                 @include('invoices._paymentList')

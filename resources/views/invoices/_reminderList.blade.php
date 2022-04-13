@@ -3,7 +3,9 @@
     <thead>
         <tr>
             <th>{{ __('name') }}</th>
-            <th>{{ __('description') }}</th>
+            <th>{{ __('Description') }}</th>
+            <th>{{ __('created_at') }}</th>
+            <th>{{ __('Note') }}</th>
             <th>{{ __('conform') }}</th>
             <th>{{ __('attachments') }}</th>
         </tr>
@@ -56,6 +58,18 @@
                     {
                         data: 'description',
                         name: 'description',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'created_at',
+                        name: 'created_at',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'note',
+                        name: 'note',
                         orderable: false,
                         searchable: false
                     },

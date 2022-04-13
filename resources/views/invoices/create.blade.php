@@ -51,8 +51,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="description" class="control-label thin-weight">@lang('Description')</label>
-                                    <textarea name="description" id="description" cols="50" rows="10" class="form-control"></textarea>
+                                    <label for="note" class="control-label thin-weight">@lang('Description')</label>
+                                    <textarea name="note" id="note" cols="50" rows="10" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -186,7 +186,7 @@
     <div class="alert alert-danger title-alert" style="display: none;">
         {{ __('Title is required') }}
     </div>
-    <div class="alert alert-danger description-alert" style="display: none;">
+    <div class="alert alert-danger note-alert" style="display: none;">
         {{ __('Description is required') }}
     </div>
     <div class="alert alert-danger client-alert" style="display: none;">
@@ -266,7 +266,7 @@
                 closeOnClear: false,
             });
 
-            $('#description').summernote({
+            $('#note').summernote({
                 toolbar: [
                     ['fontsize', ['fontsize']],
                     ['font', ['bold', 'italic', 'underline', 'clear']],
@@ -341,10 +341,10 @@
                             } else {
                                 $('.title-alert').hide();
                             }
-                            if (jqXHR.responseJSON.errors.description != undefined) {
-                                $('.description-alert').show();
+                            if (jqXHR.responseJSON.errors.note != undefined) {
+                                $('.note-alert').show();
                             } else {
-                                $('.description-alert').hide();
+                                $('.note-alert').hide();
                             }
                             if (jqXHR.responseJSON.errors.client_external_id != undefined) {
                                 $('.client-alert').show();

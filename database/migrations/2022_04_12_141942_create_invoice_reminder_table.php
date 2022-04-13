@@ -21,7 +21,7 @@ class CreateInvoiceReminderTable extends Migration
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
 
             $table->dateTime('remind_at')->nullable();
-            $table->text('description')->nullable(); 
+            $table->text('note')->nullable(); 
             $table->boolean('conform');
             
             $table->boolean('archived');

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSendDateToInvoices extends Migration
+class AddDescriptionReminderTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddSendDateToInvoices extends Migration
      */
     public function up()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            $table->dateTime('send_date')->nullable();
-            $table->dateTime('reporting_date')->nullable();
+        Schema::table('reminders', function (Blueprint $table) {
+            $table->string('description')->nullable();
         });
     }
 
@@ -26,9 +25,8 @@ class AddSendDateToInvoices extends Migration
      */
     public function down()
     {
-        Schema::table('invoices', function (Blueprint $table) {
-            $table->dropColumn('send_date');
-            $table->dropColumn('reporting_date');
+        Schema::table('reminders', function (Blueprint $table) {
+            $table->dropColumn('description');
         });
     }
 }

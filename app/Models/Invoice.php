@@ -124,6 +124,7 @@ class Invoice extends Model
     }
     public function is_cdef_date()
     {
+        return 1;
         return $this->isSent() ? $this->sent_at->addDays(14) <= today() : 0;
     }
     public function cap_date()
@@ -132,6 +133,7 @@ class Invoice extends Model
     }
     public function is_cap_date()
     {
+        return 1;
         return $this->due_at->subDays(5) <= today();
     }
     public function rp_date()
@@ -140,6 +142,7 @@ class Invoice extends Model
     }
     public function is_rp_date()
     {
+        return 1;
         return $this->due_at->subDays(1) <= today();
     }
 
