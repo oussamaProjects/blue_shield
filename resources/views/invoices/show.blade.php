@@ -414,6 +414,13 @@
                     $('#send-mail').hide(150);
             });
 
+            $('#reporting_date').pickadate({
+            hiddenName: true,
+            format: "{{ frontendDate() }}",
+            formatSubmit: 'yyyy/mm/dd',
+            closeOnClear: false,
+        });
+
         });
     </script>
 @endpush

@@ -127,19 +127,4 @@
 
 </form>
 
-@push('scripts')
-    <script>
-        $('#payment_date').pickadate({
-            hiddenName: true,
-            format: "{{ frontendDate() }}",
-            formatSubmit: 'yyyy/mm/dd',
-            closeOnClear: false,
-        });
-        $('#reporting_date').pickadate({
-            hiddenName: true,
-            format: "{{ frontendDate() }}",
-            formatSubmit: 'yyyy/mm/dd',
-            closeOnClear: false,
-        });
-    </script>
-@endpush
+ 
