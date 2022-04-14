@@ -26,7 +26,7 @@ class AddAttachmentsToInvoiceReminderTable extends Migration
     public function down()
     {
         Schema::table('invoice_reminder', function (Blueprint $table) {
-            //
+            $table->dropColumn('attachments');
         });
     }
 }

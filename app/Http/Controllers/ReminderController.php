@@ -47,19 +47,21 @@ class ReminderController extends Controller
             return redirect()->route('invoices.show', $invoice->external_id);
         }
 
+        // dd($request);
         // if ($invoice->reminders->contains($request->reminder_id))
         //     $invoice->reminders()->detach( );
 
         $invoice->reminders()->attach($request->reminder_id, [
             'note' => $request->note,
             'conform' => $request->conform ?? 1,
-            'attachments' => $request->attachments ?? array(),
+            'attachments' => $request->attachments_files,
         ]);
 
 
         $invoice->reporting_date = $request->reporting_date;
         $invoice->save();
 
+        // foreach ($variable as $key => $value) {  }
         session()->flash('flash_message', __('Reminder successfully added to invoice'));
         return redirect()->back();
     }

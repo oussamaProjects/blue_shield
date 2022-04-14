@@ -84,12 +84,12 @@
                                     @if ($clients->isEmpty())
                                         <option value="" default></option>
                                         <option value="new_client">+ @lang('Create New Client')</option>
-                                        @endif
-                                        @foreach ($clients as $client => $clientK)
+                                    @endif
+                                    @foreach ($clients as $client => $clientK)
                                         <option value="{{ $client }}" data-tokens="{{ $clientK }}">
                                             {{ $clientK }}</option>
-                                            @endforeach
-                                            <option value="new_client">+ @lang('Create New Client')</option>
+                                    @endforeach
+                                    <option value="new_client">+ @lang('Create New Client')</option>
                                 </select>
                             @endif
                         </div>
@@ -126,13 +126,13 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="send_date" class="control-label thin-weight">@lang('send_date')</label>
-                                    <input type="text" id="send_date" name="send_date" data-value="{{ now()->addDays(3) }}"
-                                        class="form-control">
+                                    <input type="text" id="send_date" name="send_date"
+                                        data-value="{{ now()->addDays(3) }}" class="form-control">
                                 </div>
                             </div>
 
@@ -148,17 +148,18 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="delivery_date" class="control-label thin-weight">@lang('delivery_date')</label>
-                                    <input type="text" id="delivery_date" name="delivery_date" data-value="{{ now()->addDays(3) }}"
-                                        class="form-control">
+                                    <label for="delivery_date"
+                                        class="control-label thin-weight">@lang('delivery_date')</label>
+                                    <input type="text" id="delivery_date" name="delivery_date"
+                                        data-value="{{ now()->addDays(3) }}" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="ack_date" class="control-label thin-weight">@lang('ack_date')</label>
-                                    <input type="text" id="ack_date" name="ack_date"
-                                        data-value="{{ now()->addDays(3) }}" class="form-control">
+                                    <input type="text" id="ack_date" name="ack_date" data-value="{{ now()->addDays(3) }}"
+                                        class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -172,6 +173,10 @@
                                 @endforeach
                             </select>
                         </div>
+
+
+
+                        @include('invoices._attachments')
 
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -216,21 +221,21 @@
                 }
             });
 
-            
+
             $('#create_at').pickadate({
                 hiddenName: true,
                 format: "{{ frontendDate() }}",
                 formatSubmit: 'yyyy/mm/dd',
                 closeOnClear: false,
             });
-            
+
             $('#due_at').pickadate({
                 hiddenName: true,
                 format: "{{ frontendDate() }}",
                 formatSubmit: 'yyyy/mm/dd',
                 closeOnClear: false,
             });
-            
+
             $('#deadline').pickadate({
                 hiddenName: true,
                 format: "{{ frontendDate() }}",
@@ -251,7 +256,7 @@
                 formatSubmit: 'yyyy/mm/dd',
                 closeOnClear: false,
             });
-           
+
             $('#delivery_date').pickadate({
                 hiddenName: true,
                 format: "{{ frontendDate() }}",
@@ -282,8 +287,8 @@
             });
 
             myDropzone = null;
-            @if(Entrust::can('invoice-upload-files') && $filesystem_integration)
-            var myDropzone = new Dropzone("#createTaskForm", {
+            @if (Entrust::can('invoice-upload-files') && $filesystem_integration)
+                var myDropzone = new Dropzone("#createTaskForm", {
                 autoProcessQueue: false,
                 uploadMultiple: true,
                 parallelUploads: 5,
@@ -292,21 +297,29 @@
                 previewsContainer: "#dropzone-images",
                 clickable:'#dropzone-images',
                 paramName: 'images',
-                acceptedFiles: "image/*,application/pdf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.openxmlformats-officedocument.spreadsheetml.template, application/vnd.openxmlformats-officedocument.presentationml.template, application/vnd.openxmlformats-officedocument.presentationml.slideshow, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/vnd.openxmlformats-officedocument.presentationml.slide, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.openxmlformats-officedocument.wordprocessingml.template, application/vnd.ms-excel.addin.macroEnabled.12, application/vnd.ms-excel.sheet.binary.macroEnabled.12,text/rtf,text/plain,audio/*,video/*,.csv,.doc,.xls,.ppt,application/vnd.ms-powerpoint,.pptx",
-
-            });
-
-            myDropzone.on("success", function(file, response) {
+                acceptedFiles: "image/*,application/pdf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
+                application/vnd.openxmlformats-officedocument.spreadsheetml.template,
+                application/vnd.openxmlformats-officedocument.presentationml.template,
+                application/vnd.openxmlformats-officedocument.presentationml.slideshow,
+                application/vnd.openxmlformats-officedocument.presentationml.presentation,
+                application/vnd.openxmlformats-officedocument.presentationml.slide,
+                application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                application/vnd.openxmlformats-officedocument.wordprocessingml.template,
+                application/vnd.ms-excel.addin.macroEnabled.12,
+                application/vnd.ms-excel.sheet.binary.macroEnabled.12,text/rtf,text/plain,audio/*,video/*,.csv,.doc,.xls,.ppt,application/vnd.ms-powerpoint,.pptx",
+            
+                });
+            
+                myDropzone.on("success", function(file, response) {
                 window.location.href = ("/invoices/"+response.invoice_external_id)
-            });
-
-            myDropzone.on("processing", function(file, response) {
+                });
+            
+                myDropzone.on("processing", function(file, response) {
                 $('input[type="submit"]').attr("disabled", true);
-            });
-            myDropzone.on("error", function(file, response) {
+                });
+                myDropzone.on("error", function(file, response) {
                 $('input[type="submit"]').attr("disabled", false);
-            });
-
+                });
             @endif
 
             $('input[type="submit"]').on("click", function(e) {
@@ -318,7 +331,7 @@
 
                 } else {
 
-                    console.debug(  $("#createInvoiceForm").serialize());
+                    console.debug($("#createInvoiceForm").serialize());
                     $.ajax({
                         type: 'post',
                         url: '{{ route('invoices.store') }}',

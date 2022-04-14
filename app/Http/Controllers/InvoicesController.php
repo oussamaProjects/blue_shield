@@ -141,6 +141,7 @@ class InvoicesController extends Controller
                 'client_id' => $client->id,
                 'project_id' => optional($project)->id,
                 'status_id' => $request->status_id,
+                'attachments' => $request->attachments,
                 'status' => 'draft',
             ]
         );

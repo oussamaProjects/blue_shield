@@ -353,7 +353,7 @@
             </div>
         </div>
     @endif
-    
+
     <div class="modal fade" id="add-invoice-line-modal" tabindex="-1" role="dialog" aria-hidden="true"
         style="display:none;">
         <div class="modal-dialog modal-lg" style="background:white;">
@@ -415,11 +415,11 @@
             });
 
             $('#reporting_date').pickadate({
-            hiddenName: true,
-            format: "{{ frontendDate() }}",
-            formatSubmit: 'yyyy/mm/dd',
-            closeOnClear: false,
-        });
+                hiddenName: true,
+                format: "{{ frontendDate() }}",
+                formatSubmit: 'yyyy/mm/dd',
+                closeOnClear: false,
+            });
 
         });
     </script>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDescriptionReminderTable extends Migration
+class AddAttachementRequiredToInvoices extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDescriptionReminderTable extends Migration
      */
     public function up()
     {
-        Schema::table('reminders', function (Blueprint $table) {
-            $table->string('description')->nullable();
+        Schema::table('invoices', function (Blueprint $table) {
+            $table->json('attachments')->nullable(); 
         });
     }
 
@@ -25,8 +25,8 @@ class AddDescriptionReminderTable extends Migration
      */
     public function down()
     {
-        Schema::table('reminders', function (Blueprint $table) {
-            $table->dropColumn('description');
+        Schema::table('invoices', function (Blueprint $table) {
+            $table->dropColumn('attachments');
         });
     }
 }

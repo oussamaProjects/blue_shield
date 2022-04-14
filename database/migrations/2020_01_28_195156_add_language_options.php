@@ -14,10 +14,10 @@ class AddLanguageOptions extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('card_brand');
-            $table->dropColumn('stripe_id');
-            $table->dropColumn('card_last_four');
-            $table->dropColumn('trial_ends_at');
+            // $table->dropColumn('card_brand');
+            // $table->dropColumn('stripe_id');
+            // $table->dropColumn('card_last_four');
+            // $table->dropColumn('trial_ends_at');
             $table->string("language", 2)->default("EN")->after("remember_token");
         });
 
@@ -34,10 +34,10 @@ class AddLanguageOptions extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('card_brand');
-            $table->string('stripe_id');
-            $table->string('card_last_four');
-            $table->timestamp('trial_ends_at');
+            // $table->string('card_brand');
+            // $table->string('stripe_id');
+            // $table->string('card_last_four');
+            // $table->timestamp('trial_ends_at');
             $table->dropColumn("language");
         });
         Schema::table('settings', function (Blueprint $table) {

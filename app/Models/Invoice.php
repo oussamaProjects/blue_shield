@@ -43,6 +43,7 @@ class Invoice extends Model
         'ack_date',
         'db_id',
         'total',
+        'attachments',
     ];
 
     protected $dates = [
