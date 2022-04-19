@@ -1,27 +1,67 @@
-<div class="col-sm-3">
-    <label for="name" class="base-input-label">@lang('Docs')</label>
-</div>
-<div class="col-sm-9">
-
-    <div class="form-group col-sm-8">
-
+@if ($attachments != null)
+    <div>
+        <label for="name" class="base-input-label">@lang('Docs')</label>
+    </div>
+    <div>
         <div class="checkbox">
-            <label><input type="checkbox" name="attachments[]" value="1">Attachement</label>
+            <label style="ùargin-bottom:8px;margin-left: -20px;display: flex;gap: 14px;">
+                <strong style="width: 200px">Attachement</strong>
+                <div id="" class="input-group">
+                    {{-- <input type="checkbox" name="attachments[]" value="1" {{ !in_array('1', $attachments) ? 'disabled' : 'required' }}> --}}
+                    <input type="file" name="attachments_files[]" id="" onchange="loadPreview(this);" {{ !in_array('1', $attachments) ? 'disabled' : 'required' }}>
+                    <span style="font-size:10px">Recommended files (PDF)</span>
+                </div>
+            </label>
         </div>
         <div class="checkbox">
-            <label><input type="checkbox" name="attachments[]" value="2">Bon de Livraison</label>
+            <label style="ùargin-bottom:8px;margin-left: -20px;display: flex;gap: 14px;">
+                <strong style="width: 200px">Bon de Livraison</strong>
+                <div id="" class="input-group">
+                    {{-- <input type="checkbox" name="attachments[]" value="2" {{ !in_array('2', $attachments) ? 'disabled' : 'required' }}> --}}
+                    <input type="file" name="attachments_files[]" id="" onchange="loadPreview(this);" {{ !in_array('2', $attachments) ? 'disabled' : 'required' }}>
+                    <span style="font-size:10px">Recommended files (PDF)</span>
+                </div>
+            </label>
         </div>
         <div class="checkbox">
-            <label><input type="checkbox" name="attachments[]" value="3">Ordre de Travail</label>
+            <label style="ùargin-bottom:8px;margin-left: -20px;display: flex;gap: 14px;">
+                <strong style="width: 200px">Ordre de Travail</strong>
+                <div id="" class="input-group">
+                    {{-- <input type="checkbox" name="attachments[]" value="3" {{ !in_array('3', $attachments) ? 'disabled' : 'required' }}> --}}
+                    <input type="file" name="attachments_files[]" id="" onchange="loadPreview(this);" {{ !in_array('3', $attachments) ? 'disabled' : 'required' }}>
+                    <span style="font-size:10px">Recommended files (PDF)</span>
+                </div>
+            </label>
         </div>
         <div class="checkbox">
-            <label><input type="checkbox" name="attachments[]" value="4">Bon de commande</label>
+            <label style="ùargin-bottom:8px;margin-left: -20px;display: flex;gap: 14px;">
+                <strong style="width: 200px">Bon de commande</strong>
+                <div id="" class="input-group">
+                    {{-- <input type="checkbox" name="attachments[]" value="4" {{ !in_array('4', $attachments) ? 'disabled' : 'required' }}> --}}
+                    <input type="file" name="attachments_files[]" id="" onchange="loadPreview(this);" {{ !in_array('4', $attachments) ? 'disabled' : 'required' }}>
+                    <span style="font-size:10px">Recommended files (PDF)</span>
+                </div>
+            </label>
         </div>
         <div class="checkbox">
-            <label><input type="checkbox" name="attachments[]" value="5">Fiche de controle</label>
+            <label style="ùargin-bottom:8px;margin-left: -20px;display: flex;gap: 14px;">
+                <strong style="width: 200px"> Fiche de controle</strong>
+                <div id="" class="input-group">
+                    {{-- <input type="checkbox" name="attachments[]" value="5" {{ !in_array('5', $attachments) ? 'disabled' : 'required' }}> --}}
+                    <input type="file" name="attachments_files[]" id="" onchange="loadPreview(this);" {{ !in_array('5', $attachments) ? 'disabled' : 'required' }}>
+                    <span style="font-size:10px">Recommended files (PDF)</span>
+                </div>
+            </label>
         </div>
         <div class="checkbox">
-            <label><input type="checkbox" name="attachments[]" value="6">Fiche de pointage</label>
+            <label style="ùargin-bottom:8px;margin-left: -20px;display: flex;gap: 14px;">
+                <strong style="width: 200px"> Fiche de pointage</strong>
+                <div id="" class="input-group">
+                    {{-- <input type="checkbox" name="attachments[]" value="6" {{ !in_array('6', $attachments) ? 'disabled' : 'required' }}> --}}
+                    <input type="file" name="attachments_files[]" id="" onchange="loadPreview(this);" {{ !in_array('6', $attachments) ? 'disabled' : 'required' }}>
+                    <span style="font-size:10px">Recommended files (PDF)</span>
+                </div>
+            </label>
         </div>
     </div>
-</div>
+@endif

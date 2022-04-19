@@ -138,7 +138,7 @@ class ProjectsController extends Controller
         $totaltsize = substr($mbsize, 0, 4);
 
         if ($totaltsize > 15) {
-            Session::flash('flash_message', __('File Size cannot be bigger than 15MB'));
+            Session::flash('flash_message0', __('File Size cannot be bigger than 15MB'));
             return redirect()->back();
         }
 

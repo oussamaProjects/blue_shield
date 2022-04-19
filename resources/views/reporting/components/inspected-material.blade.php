@@ -15,10 +15,8 @@
                                     <div class="col-lg-4 col-md-4 col-sm-12">
                                         <select id="matn" class="form-control kt_selectpicker" name="material">
                                             <option value="">Select Type</option>
-
-                                            <option value="matn">matn</option>
-
-                                            <option value="newmat">New</option>
+                                            <option value="matn">Acier</option>
+                                            {{-- <option value="newmat">New</option> --}}
                                         </select>
                                         <span class="form-text text-muted">Please select Material.</span>
                                     </div>
@@ -83,17 +81,12 @@
                                     <div class="col-lg-4 col-md-4 col-sm-12 form-group-sub">
                                         <select class="form-control kt_selectpicker" id="controltype" required="required"
                                             name="controltype">
-                                            <option value="">Select Type
-                                            </option>
-                                            <option value="UT">Ultra Sonic
-                                                Testing </option>
-                                            <option selected value="VT">Visual
-                                                Testing</option>
-                                            <option value="MT">Magnetoscopie
-                                                Testing</option>
+                                            <option selected value="">Select Type</option>
+                                            <option value="UT">Ultra Sonic Testing </option>
+                                            <option value="VT">Visual Testing</option>
+                                            <option value="MT">Magnetoscopie Testing</option>
                                         </select>
-                                        <span class="form-text text-muted">Please
-                                            select an option.</span>
+                                        <span class="form-text text-muted">Please select an option.</span>
                                     </div>
                                 </div>
                                 <div class="row">

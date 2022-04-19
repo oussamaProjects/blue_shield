@@ -164,7 +164,6 @@
                             </div>
                         </div>
 
-
                         <div class="form-group">
                             <label for="status_id" class="control-label thin-weight">@lang('Status')</label>
                             <select name="status_id" id="status" class="form-control">
@@ -173,8 +172,6 @@
                                 @endforeach
                             </select>
                         </div>
-
-
 
                         @include('invoices._attachments')
 
@@ -220,7 +217,6 @@
                     window.location.href = "/clients/create"
                 }
             });
-
 
             $('#create_at').pickadate({
                 hiddenName: true,
@@ -289,36 +285,26 @@
             myDropzone = null;
             @if (Entrust::can('invoice-upload-files') && $filesystem_integration)
                 var myDropzone = new Dropzone("#createTaskForm", {
-                autoProcessQueue: false,
-                uploadMultiple: true,
-                parallelUploads: 5,
-                maxFiles: 50,
-                addRemoveLinks: true,
-                previewsContainer: "#dropzone-images",
-                clickable:'#dropzone-images',
-                paramName: 'images',
-                acceptedFiles: "image/*,application/pdf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,
-                application/vnd.openxmlformats-officedocument.spreadsheetml.template,
-                application/vnd.openxmlformats-officedocument.presentationml.template,
-                application/vnd.openxmlformats-officedocument.presentationml.slideshow,
-                application/vnd.openxmlformats-officedocument.presentationml.presentation,
-                application/vnd.openxmlformats-officedocument.presentationml.slide,
-                application/vnd.openxmlformats-officedocument.wordprocessingml.document,
-                application/vnd.openxmlformats-officedocument.wordprocessingml.template,
-                application/vnd.ms-excel.addin.macroEnabled.12,
-                application/vnd.ms-excel.sheet.binary.macroEnabled.12,text/rtf,text/plain,audio/*,video/*,.csv,.doc,.xls,.ppt,application/vnd.ms-powerpoint,.pptx",
-            
+                    autoProcessQueue: false,
+                    uploadMultiple: true,
+                    parallelUploads: 5,
+                    maxFiles: 50,
+                    addRemoveLinks: true,
+                    previewsContainer: "#dropzone-images",
+                    clickable:'#dropzone-images',
+                    paramName: 'images',
+                    acceptedFiles: "image/*,application/pdf, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.spreadsheetml.template,application/vnd.openxmlformats-officedocument.presentationml.template,application/vnd.openxmlformats-officedocument.presentationml.slideshow,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.openxmlformats-officedocument.presentationml.slide,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.wordprocessingml.template,application/vnd.ms-excel.addin.macroEnabled.12,application/vnd.ms-excel.sheet.binary.macroEnabled.12,text/rtf,text/plain,audio/,video/,.csv,.doc,.xls,.ppt,application/vnd.ms-powerpoint,.pptx",          
                 });
             
                 myDropzone.on("success", function(file, response) {
-                window.location.href = ("/invoices/"+response.invoice_external_id)
+                    window.location.href = ("/invoices/"+response.invoice_external_id)
                 });
             
                 myDropzone.on("processing", function(file, response) {
-                $('input[type="submit"]').attr("disabled", true);
+                    $('input[type="submit"]').attr("disabled", true);
                 });
                 myDropzone.on("error", function(file, response) {
-                $('input[type="submit"]').attr("disabled", false);
+                    $('input[type="submit"]').attr("disabled", false);
                 });
             @endif
 
@@ -370,8 +356,6 @@
                 }
 
             });
-
-
 
         });
     </script>

@@ -16,7 +16,7 @@
     </h4>
 </div>
 
-<form action="{{ route('reminder.add', [$invoice->external_id]) }}" method="POST">
+<form action="{{ route('reminder.add', [$invoice->external_id]) }}" method="POST" enctype="multipart/form-data">
     <div class="modal-body">
 
         <div class="row">
@@ -26,7 +26,7 @@
 
                 <div class="col-lg-12">
                     @if ($reminder->id == 1)
-                        @include('invoices._attachments', [
+                        @include('invoices._attachments_upload', [
                             'attachments' => json_decode($invoice->attachments),
                         ])
                     @endif
@@ -76,13 +76,17 @@
                         <tbody>
 
                             @foreach ($invoiceReminders as $reminde)
-                                <tr>
-                                    <td>{{ $reminde->name }}</td>
-                                    {{-- <td>{{ $reminde->description }}</td> --}}
-                                    <td>{{ $reminde->note }}</td>
-                                    <td>{{ $reminde->conform == 1 ? 'conform' : '' }}</td>
-                                    <td>{{ $reminde->reporting_date }}</td>
-                                </tr>
+                                @if ($loop->iteration < 10)
+                                    @if ($reminder->id == $reminde->id)
+                                        <tr>
+                                            <td>{{ $reminde->name }}</td>
+                                            {{-- <td>{{ $reminde->description }}</td> --}}
+                                            <td>{{ $reminde->note }}</td>
+                                            <td>{{ $reminde->conform == 1 ? 'conform' : '' }}</td>
+                                            <td>{{ $reminde->reporting_date }}</td>
+                                        </tr>
+                                    @endif
+                                @endif
                             @endforeach
                         </tbody>
                     </table>
