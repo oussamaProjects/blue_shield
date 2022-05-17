@@ -44,9 +44,10 @@ class ReportController extends Controller
      * @param  \App\Report  $report
      * @return \Illuminate\Http\Response
      */
-    public function show(Report $report)
+    public function show()
     {
-        //
+        // dd($report);
+        return view('pdf.rapport');
     }
 
     /**
